@@ -27,6 +27,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
     form.setFieldsValue({ [dataIndex]: record[dataIndex] });
   };
 
+  const mouseOver = (event: React.MouseEvent) => {
+    if (event.target instanceof HTMLElement) {
+      console.log(111, event.target.offsetTop, event);
+    }
+  }
+
   const save = async () => {
     try {
       const values = await form.validateFields();
@@ -55,7 +61,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         <Input ref={inputRef} onPressEnter={save} onBlur={save} />
       </Form.Item>
     ) : (
-      <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
+      <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit} onMouseOver={mouseOver}>
         {children}
       </div>
     );

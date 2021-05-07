@@ -27,7 +27,7 @@ class EditableTable extends React.Component<EditableTableProps, EditableTableSta
         title: 'age',
         key: 'age',
         dataIndex: 'age',
-        width: 150,
+        width: 60,
       },
       {
         title: 'address',
@@ -164,7 +164,7 @@ class EditableTable extends React.Component<EditableTableProps, EditableTableSta
       };
     });
     return (
-      <div>
+      <div style={{ margin: '20px' }}>
         <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
           Add a row
         </Button>

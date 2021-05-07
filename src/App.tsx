@@ -1,10 +1,19 @@
 import React from 'react';
-import Mytable from './components/table';
 import "antd/dist/antd.css";
+import EditableTable from './components/EditableTable';
+import HoverOverButton from './components/HoverOverButton';
 
 function App() {
   return (
-    <Mytable></Mytable>
+    <div style={{ 
+      position: 'relative',
+      height: '100%',
+      padding: '0 25px', 
+    }}>
+      <HoverOverButton></HoverOverButton>
+      <EditableTable></EditableTable>
+    </div>
+
   );
 }
 

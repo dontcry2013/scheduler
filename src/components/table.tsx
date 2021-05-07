@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableColumnType } from 'antd';
-import EditableTable from './EditableTable';
+
 type IType = {
   title: string,
   width: number,
@@ -89,9 +89,8 @@ for (let i = 0; i < 100; i++) {
 export default () => {
 
   return (
-    <div>
+    <>
       <Table pagination={{ pageSize: 105 }} columns={columns} dataSource={data} scroll={{ x: 1500, y: '100vh' }} />
-      <EditableTable></EditableTable>
-    </div>
+    </>
   )
 }
