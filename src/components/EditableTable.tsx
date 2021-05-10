@@ -177,6 +177,7 @@ const EditableTable: React.FC<EditableTableProps> = () => {
         dataSource={state.dataSource}
         columns={columns as ColumnTypes}
         scroll={{ x: 1500, y: '100%' }}
+        pagination={ false }
       />
     </div>
   );
