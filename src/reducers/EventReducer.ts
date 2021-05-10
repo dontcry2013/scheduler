@@ -1,11 +1,7 @@
 import { useReducer } from 'react';
-import { IMouseOver } from '../components/Interface'
+import { IEventState } from '../components/Interface';
 
-interface iState {
-  mouseOver: IMouseOver,
-}
-
-export const initialState: iState = {
+export const initialState: IEventState = {
   mouseOver: { top: 0, key: '0', },
 }
 

@@ -16,7 +16,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<Input>(null);
   const form = useContext(EditableContext)!;
-  const dispatch = useContext(EventContext);
+  const { dispatch } = useContext(EventContext);
 
   useEffect(() => {
     if (editing) {

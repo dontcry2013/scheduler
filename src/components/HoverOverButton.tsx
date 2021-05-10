@@ -1,19 +1,19 @@
 import React from "react";
+import { Button } from 'antd';
 import { IMouseOver } from '../components/Interface'
 
 const mystyle: any = {
   position: 'relative',
-  left: 0,
-  top: 100,
-  width: 25,
+  display: 'inline',
+  left: -30,
+  zIndex: 10,
 };
 
-const HoverOverButton: React.FC<any> = ({ mouseOver }: { mouseOver: IMouseOver }) => {
-    const style = { ...mystyle, top: mouseOver.top }
-    console.log(mouseOver);
+const HoverOverButton: React.FC<any> = (prop: { mouseOver: IMouseOver, handleAdd: () => void  }) => {
+    const style = { ...mystyle, top: prop.mouseOver.top }
     return (
       <div id="iButtons" style={style}>
-        <input type="button" value="+"></input>
+        <Button style={{ paddingLeft: 8, paddingRight: 8 }} type="primary" onClick={prop.handleAdd}>+</Button>
       </div>
     );
 }

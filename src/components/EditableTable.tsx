@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { Table, Button, Popconfirm } from 'antd';
-import { DataType, EditableTableState } from './Interface';
+import { Table, Popconfirm } from 'antd';
+import { DataType, EditableTableState, IMouseOver, } from './Interface';
 import EditableRow from './EditableRow';
 import EditableCell from './EditableCell';
+import HoverOverButton from './HoverOverButton';
+import { EventContext } from '../reducers/EventContext';
 
 type EditableTableProps = Parameters<typeof Table>[0];
 
@@ -28,8 +30,12 @@ const data = {
 
 type iColumns = (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[];
 
-const EditableTableFunctional: React.FC<EditableTableProps>  = () => {
+const EditableTable: React.FC<EditableTableProps> = () => {
   const [state, setState] = useState<EditableTableState>(data);
+  const { eventState } = useContext(EventContext);
+  const mouseOver: IMouseOver = {
+    top: eventState.mouseOver.top, key: eventState.mouseOver.key
+  }
 
   const components = {
     body: {
@@ -163,9 +169,7 @@ const EditableTableFunctional: React.FC<EditableTableProps>  = () => {
 
   return (
     <div style={{ margin: '0 30px' }}>
-      <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
-      </Button>
+      <HoverOverButton mouseOver={mouseOver} handleAdd={handleAdd}></HoverOverButton>
       <Table
         components={components}
         rowClassName={() => 'editable-row'}
@@ -178,4 +182,4 @@ const EditableTableFunctional: React.FC<EditableTableProps>  = () => {
   );
 }
 
-export default EditableTableFunctional;
+export default EditableTable;

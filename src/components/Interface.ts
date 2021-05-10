@@ -34,3 +34,7 @@ export interface IMouseOver {
   top: number,
   key: string,
 }
+
+export interface IEventState {
+  mouseOver: IMouseOver,
+}
