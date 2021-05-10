@@ -29,3 +29,8 @@ export interface EditableTableState {
   dataSource: DataType[];
   count: number;
 }
+
+export interface IMouseOver {
+  top: number,
+  key: string,
+}

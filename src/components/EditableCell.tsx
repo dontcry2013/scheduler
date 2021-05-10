@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Form, Input } from 'antd';
 import { EditableCellProps } from './Interface';
-import EditableContext from './EditableContext';
+import EditableContext from '../reducers/EditableContext';
+import { EventContext } from '../reducers/EventContext';
 
 const EditableCell: React.FC<EditableCellProps> = ({
   title,
@@ -15,6 +16,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<Input>(null);
   const form = useContext(EditableContext)!;
+  const dispatch = useContext(EventContext);
 
   useEffect(() => {
     if (editing) {
@@ -29,7 +31,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   const mouseOver = (event: React.MouseEvent) => {
     if (event.target instanceof HTMLElement) {
-      console.log(111, event.target.offsetTop, event);
+      dispatch({ type: 'SET_TOP', payload: { top: event.clientY, key: record.key } });
     }
   }
 

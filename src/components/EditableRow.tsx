@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'antd';
 import { EditableRowProps } from './Interface';
-import EditableContext from './EditableContext';
+import EditableContext from '../reducers/EditableContext';
 
 const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
   const [form] = Form.useForm();
