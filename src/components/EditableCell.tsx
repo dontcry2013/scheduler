@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Form, Input } from 'antd';
+import { Input } from 'antd';
 import { EditableCellProps } from './Interface';
-import EditableContext from '../reducers/EditableContext';
 import { EventContext } from '../reducers/EventContext';
 
 const EditableCell: React.FC<EditableCellProps> = ({
@@ -15,55 +14,45 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<Input>(null);
-  const form = useContext(EditableContext)!;
   const { dispatch } = useContext(EventContext);
-
+  
+  let value: string;
+  if (record && dataIndex) {
+    value = record[dataIndex];
+  }
+  
   useEffect(() => {
     if (editing) {
       inputRef.current!.focus();
     }
+    console.log(record);
   }, [editing]);
 
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({ [dataIndex]: record[dataIndex] });
-  };
+  const tick = () => {
+    console.log(record, dataIndex, value);
+    if (value && value === 'x') {
+      handleSave({ ...record, ...{[dataIndex]: ''} });
+    } else {
+      handleSave({ ...record, ...{[dataIndex]: 'x'} });
+    }
+  }
 
   const mouseOver = (event: React.MouseEvent) => {
+    console.log(333, record);
     if (event.target instanceof HTMLElement) {
       dispatch({ type: 'SET_TOP', payload: { top: event.pageY, key: record.key } });
     }
   }
 
-  const save = async () => {
-    try {
-      const values = await form.validateFields();
-
-      toggleEdit();
-      handleSave({ ...record, ...values });
-    } catch (errInfo) {
-      console.log('Save failed:', errInfo);
-    }
-  };
-
   let childNode = children;
 
   if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-      </Form.Item>
+    childNode = dataIndex === "name" ? (
+      <div className="editable-cell-value-wrap" onClick={tick} onMouseOver={mouseOver} style={{minHeight: 20}}>
+        {children}
+      </div>
     ) : (
-      <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit} onMouseOver={mouseOver}>
+      <div className="editable-cell-value-wrap" onClick={tick} style={{minHeight: 20}}>
         {children}
       </div>
     );
