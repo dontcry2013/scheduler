@@ -20,9 +20,14 @@ export interface EditableCellProps {
 
 export interface DataType {
   key: React.Key;
-  name: string;
-  age: string;
-  address: string;
+  weekday: string;
+  session: string;
+  time: string;
+  cohort: string;
+  teacher: string;
+  classroom: string;
+  class: string;
+  weeks: string[];
 }
 
 export interface EditableTableState {

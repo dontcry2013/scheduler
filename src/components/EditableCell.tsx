@@ -38,7 +38,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
   }
 
   const mouseOver = (event: React.MouseEvent) => {
-    console.log(333, record);
     if (event.target instanceof HTMLElement) {
       dispatch({ type: 'SET_TOP', payload: { top: event.pageY, key: record.key } });
     }
