@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Table, Popconfirm } from 'antd';
 import { ColumnsType, ColumnProps, ColumnGroupType, } from "antd/lib/table";
 import { DataType, EditableTableState, IMouseOver, } from './Interface';
@@ -24,7 +24,9 @@ const data = {
       teacher: 'Deng Peipei',
       classroom: '5306',
       class: 'EAP4DEPS4',
-      weeks: ['T', 'T', 'T'],
+      week1: 'T',
+      week2: 'T',
+      week3: 'T',
     },
     {
       key: '1',
@@ -35,14 +37,71 @@ const data = {
       teacher: 'Jhavid Harbut',
       classroom: '6409公共教学区',
       class: 'EAP4DEPS4',
-      weeks: ['T', 'T', 'T'],
+      week1: 'T',
+      week2: 'T',
+      week3: 'T',
     },
   ],
   count: 2,
 };
 
+const columnStatic = [
+  {
+    title: 'Weekday',
+    key: 'weekday',
+    dataIndex: 'weekday',
+    width: 70,
+    editable: true,
+    fixed: 'left',
+  },
+  {
+    title: 'Session',
+    key: 'session',
+    dataIndex: 'session',
+    width: 70,
+    editable: true,
+  },
+  {
+    title: 'Time',
+    key: 'time',
+    dataIndex: 'time',
+    width: 150,
+    editable: true,
+  },
+  {
+    title: 'Cohort',
+    dataIndex: 'cohort',
+    key: '1',
+    width: 150,
+    editable: true,
+  },
+  {
+    title: 'Teacher',
+    dataIndex: 'teacher',
+    key: '2',
+    width: 150,
+    editable: true,
+  },
+  {
+    title: 'Classroom',
+    dataIndex: 'classroom',
+    key: '3',
+    width: 150,
+    editable: true,
+  },
+  {
+    title: 'Class',
+    dataIndex: 'class',
+    key: '4',
+    width: 150,
+    editable: true,
+  },
+]
+
 const EditableTable: React.FC<EditableTableProps> = () => {
-  const [state, setState] = useState<EditableTableState>(data);
+  // const [state, setState] = useState<EditableTableState>(data);
+  const [state, setState] = useState<any>(data);
+  const [columnState, setColumnState] = useState<any>(columnStatic);
   const { eventState } = useContext(EventContext);
   const mouseOver: IMouseOver = {
     top: eventState.mouseOver.top, key: eventState.mouseOver.key
@@ -55,112 +114,67 @@ const EditableTable: React.FC<EditableTableProps> = () => {
     },
   };
 
-  let staticColumns: iColumns = [
-    {
-      title: 'TESTTESTTEST',
-      children: [
-        {
-          title: 'Weekday',
-          key: 'weekday',
-          dataIndex: 'weekday',
-          width: 70,
-          editable: true,
-          fixed: 'left',
-        },
-        {
-          title: 'Session',
-          key: 'session',
-          dataIndex: 'session',
-          width: 70,
-          editable: true,
-        },
-        {
-          title: 'Time',
-          key: 'time',
-          dataIndex: 'time',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: 'Cohort',
-          dataIndex: 'cohort',
-          key: '1',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: 'Teacher',
-          dataIndex: 'teacher',
-          key: '2',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: 'Classroom',
-          dataIndex: 'classroom',
-          key: '3',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: 'Class',
-          dataIndex: 'class',
-          key: '4',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: '3/1',
-          dataIndex: 'weeks[0]',
-          key: '5',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: '3/8',
-          dataIndex: 'weeks[1]',
-          key: '6',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: '3/15',
-          dataIndex: 'weeks[2]',
-          key: '7',
-          width: 150,
-          editable: true,
-        },
-        {
-          title: 'operation',
-          dataIndex: 'operation',
-          fixed: 'right',
-          width: 100,
-          render: (_: any, record: any) =>
-            state.dataSource.length >= 1 ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
-                <a>Delete</a>
-              </Popconfirm>
-            ) : null
-        },
-      ]
-    },
-  ];
+  useEffect(() => {
+    const weekColumns = [
+      {
+        title: '3/1',
+        dataIndex: 'week1',
+        key: '5',
+        width: 150,
+        editable: true,
+      },
+      {
+        title: '3/8',
+        dataIndex: 'week2',
+        key: '6',
+        width: 150,
+        editable: true,
+      },
+      {
+        title: '3/15',
+        dataIndex: 'week3',
+        key: '7',
+        width: 150,
+        editable: true,
+      },
+    ];
 
-  staticColumns[0].children = staticColumns[0].children.map(col => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record: DataType) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        handleSave: handleSave,
-      }),
-    };
-  });
+    const opertion = [{
+      title: 'operation',
+      dataIndex: 'operation',
+      fixed: 'right',
+      width: 100,
+      render: (_: any, record: any) =>
+        state.dataSource.length >= 1 ? (
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record)}>
+            <a>Delete</a>
+          </Popconfirm>
+        ) : null
+    }];
+
+    const children = [...columnState, ...weekColumns, ...opertion].map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: (record: DataType) => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: handleSave,
+        }),
+      };
+    });
+
+    const columns = [{
+      title: '2020 Class Calendar',
+      children
+    }]
+
+    setColumnState(columns);
+  }, []);
  
   const handleDelete = (record: any) => {
     const dataSource = [...state.dataSource];
@@ -205,8 +219,7 @@ const EditableTable: React.FC<EditableTableProps> = () => {
         rowClassName={() => 'editable-row'}
         bordered
         dataSource={state.dataSource}
-        columns={staticColumns as ColumnTypes}
-        // columns={test as ColumnTypes}
+        columns={columnState as ColumnTypes}
         scroll={{ x: '100%', y: window.innerHeight - 80}}
         pagination={ false }
         size="small"

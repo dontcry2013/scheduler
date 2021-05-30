@@ -25,7 +25,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     if (editing) {
       inputRef.current!.focus();
     }
-    console.log(record);
+    console.log(dataIndex, record);
   }, [editing]);
 
   const tick = () => {
@@ -46,7 +46,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   let childNode = children;
 
   if (editable) {
-    childNode = dataIndex === "name" ? (
+    childNode = String(dataIndex) === "weekday" ? (
       <div className="editable-cell-value-wrap" onClick={tick} onMouseOver={mouseOver} style={{minHeight: 20}}>
         {children}
       </div>
